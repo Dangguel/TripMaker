@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/listView_tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="제목줄"
+        android:textStyle="bold"
+        android:textColor="#ffffff"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:background="@color/Primary"/>
+
+    <com.nightonke.boommenu.BoomMenuButton
+        android:id="@+id/bmb"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        app:bmb_inList="true"
+        app:bmb_buttonEnum="textOutsideCircle"
+        app:bmb_piecePlaceEnum="piecePlace_dot_3_1"
+        app:bmb_buttonPlaceEnum="buttonPlace_sc_3_1">
+    </com.nightonke.boommenu.BoomMenuButton>
+
+
+    <TextView
+        android:id="@+id/listView_tv_range"
+        android:layout_width="250dp"
+        android:layout_height="20dp"
+        android:text="몇 일간 여행"
+        android:layout_below="@id/listView_tv_title"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="16dp"/>
+
+    <TextView
+        android:id="@+id/listView_tv_days"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:text="몇년 몇월 몇일 ~ 몇일~ 무슨 요일"
+        android:layout_marginLeft="16dp"
+        android:layout_below="@id/listView_tv_range"/>
+
+    <TextView
+        android:id="@+id/listView_tv_untilday"
+        android:layout_width="150dp"
+        android:layout_height="20dp"
+        android:text="~ 일 남음"
+        android:layout_alignBaseline="@id/listView_tv_days"
+        android:layout_alignParentRight="true"
+        android:gravity="right"
+        android:layout_marginRight="16dp" />
+
+    <ImageView
+        android:id="@+id/listView_iv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@mipmap/ic_day"
+        android:layout_above="@id/listView_tv_untilday"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"/>
+</RelativeLayout>
