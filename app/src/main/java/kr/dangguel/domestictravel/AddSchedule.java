@@ -185,7 +185,6 @@ public class AddSchedule extends AppCompatActivity {
         tvTime.setTextColor(Color.GRAY);
         etCost.setText("");
         etDetailPlan.setText("");
-        spinSelect = null;
         latLng = null;
     }
 

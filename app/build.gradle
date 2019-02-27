@@ -30,5 +30,4 @@ dependencies {
     implementation 'com.prolificinteractive:material-calendarview:1.4.3'
     implementation 'com.naver.maps:map-sdk:3.1.0'
     implementation 'com.nightonke:boommenu:2.1.1'
-    implementation 'com.ramotion.foldingcell:folding-cell:1.2.2'
 }

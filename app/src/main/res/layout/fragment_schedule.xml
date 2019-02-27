@@ -5,11 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".ScheduleFragment">
 
-    <ListView
+    <ExpandableListView
         android:id="@+id/schedule_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipChildren="false"
-        android:clipToPadding="false"/>
+        android:groupIndicator="@null"
+        />
 
 </FrameLayout>

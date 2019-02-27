@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:background="#ffffff"
@@ -39,16 +39,15 @@
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="3dp"/>
+        <TextView
+            android:id="@+id/tv_schedule_total_cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="12sp"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
 
-        <com.ramotion.foldingcell.FoldingCell
-            android:id="@+id/folding"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </com.ramotion.foldingcell.FoldingCell>
 
     </LinearLayout>
 
