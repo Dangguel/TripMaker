@@ -1,6 +1,5 @@
 package kr.dangguel.domestictravel;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,25 +15,25 @@ import java.util.ArrayList;
 public class AddScheduleAdapter extends BaseAdapter {
 
     LayoutInflater inflater;
-    ArrayList<TimeSchedule>timeSchedules;
+    ArrayList<TimeScheduleVO> timeScheduleVOS;
     int[] btnImg = new int[]{R.mipmap.ic_edit, R.mipmap.ic_delete};
     String[] btnText = new String[]{"일정 변경", "일정 삭제"};
     int[] btnColor = new int[]{R.color.PastelGreen, R.color.PastelPink};
     BoomMenuButton bmb;
 
-    public AddScheduleAdapter(LayoutInflater inflater, ArrayList<TimeSchedule> timeSchedules) {
+    public AddScheduleAdapter(LayoutInflater inflater, ArrayList<TimeScheduleVO> timeScheduleVOS) {
         this.inflater = inflater;
-        this.timeSchedules = timeSchedules;
+        this.timeScheduleVOS = timeScheduleVOS;
     }
 
     @Override
     public int getCount() {
-        return timeSchedules.size();
+        return timeScheduleVOS.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return timeSchedules.get(position);
+        return timeScheduleVOS.get(position);
     }
 
     @Override
@@ -62,14 +61,14 @@ public class AddScheduleAdapter extends BaseAdapter {
             }
         }
 
-        TimeSchedule timeSchedule = timeSchedules.get(position);
-        tvPlaceTodo.setText(timeSchedule.placeTodo);
-        tvTime.setText(timeSchedule.time);
-        if(!timeSchedule.cost.equals("")) {
+        TimeScheduleVO timeScheduleVO = timeScheduleVOS.get(position);
+        tvPlaceTodo.setText(timeScheduleVO.placeTodo);
+        tvTime.setText(timeScheduleVO.time);
+        if(!timeScheduleVO.cost.equals("")) {
             tvCost.setVisibility(View.VISIBLE);
             ivCostType.setVisibility(View.VISIBLE);
-            tvCost.setText(timeSchedule.cost + " 원");
-            switch (timeSchedule.spinselect){
+            tvCost.setText(timeScheduleVO.cost + " 원");
+            switch (timeScheduleVO.spinselect){
                 case "식사":
                     ivCostType.setImageResource(R.mipmap.ic_meal);
                     break;
@@ -94,7 +93,7 @@ public class AddScheduleAdapter extends BaseAdapter {
             tvCost.setVisibility(View.INVISIBLE);
             ivCostType.setVisibility(View.INVISIBLE);
         }
-        if(timeSchedule.mapLat==0 && timeSchedule.mapLng==0)
+        if(timeScheduleVO.mapLat==0 && timeScheduleVO.mapLng==0)
             ivMap.setVisibility(View.INVISIBLE);
         else
             ivMap.setVisibility(View.VISIBLE);

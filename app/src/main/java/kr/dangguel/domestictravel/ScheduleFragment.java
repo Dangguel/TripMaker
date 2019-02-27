@@ -7,9 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
@@ -19,10 +17,10 @@ import java.util.HashMap;
 import static android.app.Activity.RESULT_OK;
 
 public class ScheduleFragment extends Fragment {
-    ArrayList<SchduleList> schduleLists;
+    ArrayList<ScheduleListVO> schduleLists;
     ScheduleAdapter adapter;
     ExpandableListView listView;
-    ArrayList<TimeSchedule> timeSchedules = new ArrayList<>();
+    ArrayList<TimeScheduleVO> timeScheduleVOS = new ArrayList<>();
     HashMap<Integer,ArrayList> totalSchedule = new HashMap<>();
 
     @Override
@@ -70,9 +68,9 @@ public class ScheduleFragment extends Fragment {
                     tvTotalCost.setVisibility(View.GONE);
                     int totalMoney = 0;
                     for (int i = 0; i < totalSchedule.get(groupPosition).size(); i++) {
-                        TimeSchedule timeSchedule = (TimeSchedule) totalSchedule.get(groupPosition).get(i);
-                        if (!timeSchedule.cost.equals("")) {
-                            totalMoney += Integer.parseInt(timeSchedule.cost);
+                        TimeScheduleVO timeScheduleVO = (TimeScheduleVO) totalSchedule.get(groupPosition).get(i);
+                        if (!timeScheduleVO.cost.equals("")) {
+                            totalMoney += Integer.parseInt(timeScheduleVO.cost);
                         }
                     }
 
@@ -103,10 +101,10 @@ public class ScheduleFragment extends Fragment {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case 10:
-                    timeSchedules = (ArrayList<TimeSchedule>) data.getSerializableExtra("schedule");
+                    timeScheduleVOS = (ArrayList<TimeScheduleVO>) data.getSerializableExtra("schedule");
                     int day = data.getIntExtra("day", -1);
 
-                    totalSchedule.put(day,timeSchedules);
+                    totalSchedule.put(day, timeScheduleVOS);
                     listView.expandGroup(day,true);
                     adapter.notifyDataSetChanged();
                     break;

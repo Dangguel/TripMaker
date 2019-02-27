@@ -2,18 +2,14 @@ package kr.dangguel.domestictravel;
 
 import android.content.DialogInterface;
 import android.icu.util.Calendar;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -81,14 +77,14 @@ public class MainPage2Fragment extends Fragment {
                         frag1 = activity.frag1;
                         if(!isEdit) {
                             if(calendarView.getSelectionMode()==MaterialCalendarView.SELECTION_MODE_SINGLE)
-                                activity.cals.add(new SaveCal(tvRange.getText().toString(), tvDays.getText().toString() + "간 여행", dialogEt.getText().toString(), makeDay, day1));
+                                activity.cals.add(new SaveCalVO(tvRange.getText().toString(), tvDays.getText().toString() + "간 여행", dialogEt.getText().toString(), makeDay, day1));
                             else
-                                activity.cals.add(new SaveCal(d1 + " ~ " + d2, tvDays.getText().toString() + "간 여행", dialogEt.getText().toString(), makeDay, day1));
+                                activity.cals.add(new SaveCalVO(d1 + " ~ " + d2, tvDays.getText().toString() + "간 여행", dialogEt.getText().toString(), makeDay, day1));
                         }else{
                             if(calendarView.getSelectionMode()==MaterialCalendarView.SELECTION_MODE_SINGLE)
-                                activity.cals.add(activity.getIndex(),new SaveCal(tvRange.getText().toString(), tvDays.getText().toString() + "간 여행", dialogEt.getText().toString(), makeDay, day1));
+                                activity.cals.add(activity.getIndex(),new SaveCalVO(tvRange.getText().toString(), tvDays.getText().toString() + "간 여행", dialogEt.getText().toString(), makeDay, day1));
                             else
-                                activity.cals.add(activity.getIndex(),new SaveCal(d1 + " ~ " + d2, tvDays.getText().toString() + "간 여행", dialogEt.getText().toString(), makeDay, day1));
+                                activity.cals.add(activity.getIndex(),new SaveCalVO(d1 + " ~ " + d2, tvDays.getText().toString() + "간 여행", dialogEt.getText().toString(), makeDay, day1));
                             isEdit=false;
                         }
                         frag1.updateAdapter();

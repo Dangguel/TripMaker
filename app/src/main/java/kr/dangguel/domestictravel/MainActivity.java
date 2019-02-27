@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     static int index=0;
 
-    ArrayList<SaveCal> cals = new ArrayList<>();
+    ArrayList<SaveCalVO> cals = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

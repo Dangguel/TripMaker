@@ -1,6 +1,5 @@
 package kr.dangguel.domestictravel;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,21 +11,21 @@ import java.util.ArrayList;
 
 public class ListViewTotalAdapter extends BaseAdapter{
     LayoutInflater inflater;
-    ArrayList<TimeSchedule> timeSchedules;
+    ArrayList<TimeScheduleVO> timeScheduleVOS;
 
-    public ListViewTotalAdapter(LayoutInflater inflater, ArrayList<TimeSchedule> timeSchedules) {
+    public ListViewTotalAdapter(LayoutInflater inflater, ArrayList<TimeScheduleVO> timeScheduleVOS) {
         this.inflater = inflater;
-        this.timeSchedules = timeSchedules;
+        this.timeScheduleVOS = timeScheduleVOS;
     }
 
     @Override
     public int getCount() {
-        return timeSchedules.size();
+        return timeScheduleVOS.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return timeSchedules.get(position);
+        return timeScheduleVOS.get(position);
     }
 
     @Override
@@ -39,23 +38,23 @@ public class ListViewTotalAdapter extends BaseAdapter{
         if(convertView==null)
             convertView=inflater.inflate(R.layout.schedule_total_listview,parent,false);
 
-        TimeSchedule timeSchedule = timeSchedules.get(position);
+        TimeScheduleVO timeScheduleVO = timeScheduleVOS.get(position);
         TextView time = convertView.findViewById(R.id.tv_total_time);
         TextView placeTodo = convertView.findViewById(R.id.tv_total_place_todo);
         TextView cost = convertView.findViewById(R.id.tv_total_cost);
         ImageView costType = convertView.findViewById(R.id.iv_total_cost_type);
 
-        time.setText(timeSchedule.time);
-        placeTodo.setText(timeSchedule.placeTodo);
-        if(timeSchedule.cost==null) {
+        time.setText(timeScheduleVO.time);
+        placeTodo.setText(timeScheduleVO.placeTodo);
+        if(timeScheduleVO.cost==null) {
             cost.setVisibility(View.INVISIBLE);
             costType.setVisibility(View.INVISIBLE);
         }
         else {
             cost.setVisibility(View.VISIBLE);
             costType.setVisibility(View.VISIBLE);
-            cost.setText(timeSchedule.cost);
-            switch (timeSchedule.spinselect){
+            cost.setText(timeScheduleVO.cost);
+            switch (timeScheduleVO.spinselect){
                 case "식사":
                     costType.setImageResource(R.mipmap.ic_meal);
                     break;

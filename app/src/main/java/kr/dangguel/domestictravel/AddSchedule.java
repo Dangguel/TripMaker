@@ -5,20 +5,15 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -54,14 +49,14 @@ public class AddSchedule extends AppCompatActivity {
     Spinner DialogSpinner;
     EditText etDialogCost;
     EditText etDialogDetail;
-    TimeSchedule dialogTimeSchedule;
+    TimeScheduleVO dialogTimeScheduleVO;
 
     Spinner spinner;
     String spinSelect;
 
     BoomMenuButton bmb;
 
-    ArrayList<TimeSchedule> timeSchedules;
+    ArrayList<TimeScheduleVO> timeScheduleVOS;
     AddScheduleAdapter adapter;
 
     AlertDialog.Builder builder;
@@ -89,12 +84,12 @@ public class AddSchedule extends AppCompatActivity {
             toolbar.setTitle("Day " + (day + 1) + " 일정");
         }
 
-        timeSchedules = (ArrayList<TimeSchedule>) intent.getSerializableExtra("schedule");
-        if(timeSchedules==null)
-            timeSchedules = new ArrayList<>();
+        timeScheduleVOS = (ArrayList<TimeScheduleVO>) intent.getSerializableExtra("schedule");
+        if(timeScheduleVOS ==null)
+            timeScheduleVOS = new ArrayList<>();
 
         listView = findViewById(R.id.schedule_listview_in_listview);
-        adapter = new AddScheduleAdapter(getLayoutInflater(),timeSchedules);
+        adapter = new AddScheduleAdapter(getLayoutInflater(), timeScheduleVOS);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(onItemClickListener);
 
@@ -114,7 +109,7 @@ public class AddSchedule extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(AddSchedule.this, "저장 되었습니다", Toast.LENGTH_SHORT).show();
                 Intent resultintent = new Intent();
-                resultintent.putExtra("schedule",timeSchedules);
+                resultintent.putExtra("schedule", timeScheduleVOS);
                 resultintent.putExtra("day",day);
                 setResult(RESULT_OK,resultintent);
                 finish();
@@ -175,8 +170,8 @@ public class AddSchedule extends AppCompatActivity {
             Toast.makeText(this, "장소와 시간은 필수 입력 값입니다.", Toast.LENGTH_LONG).show();
             return;
         }
-        timeSchedules.add(new TimeSchedule(etPlaceTodo.getText().toString(), latLng.latitude, latLng.longitude, tvTime.getText().toString(), etCost.getText().toString(), etDetailPlan.getText().toString(), spinSelect));
-        listSort(timeSchedules);
+        timeScheduleVOS.add(new TimeScheduleVO(etPlaceTodo.getText().toString(), latLng.latitude, latLng.longitude, tvTime.getText().toString(), etCost.getText().toString(), etDetailPlan.getText().toString(), spinSelect));
+        listSort(timeScheduleVOS);
         adapter.notifyDataSetChanged();
 
         etPlaceTodo.setText("");
@@ -200,7 +195,7 @@ public class AddSchedule extends AppCompatActivity {
                         case 0:
                             AlertDialog.Builder builder = new AlertDialog.Builder(AddSchedule.this);
                             builder.setTitle("일정 변경");
-                            dialogTimeSchedule = timeSchedules.get(position);
+                            dialogTimeScheduleVO = timeScheduleVOS.get(position);
 
                             LayoutInflater inflater = getLayoutInflater();
                             View layout = inflater.inflate(R.layout.add_schedule_dialog,null);
@@ -223,11 +218,11 @@ public class AddSchedule extends AppCompatActivity {
                                         Toast.makeText(AddSchedule.this, "장소와 시간은 필수 입력 값입니다.", Toast.LENGTH_LONG).show();
                                         return;
                                     }
-                                    timeSchedules.remove(position);
+                                    timeScheduleVOS.remove(position);
                                     if(latLng==null)
                                         latLng = new LatLng(0,0);
-                                    timeSchedules.add(position,new TimeSchedule(etDialogPlaceTodo.getText().toString(),latLng.latitude,latLng.longitude,tvDialogTime.getText().toString(),etDialogCost.getText().toString(),etDialogDetail.getText().toString(),spinSelect));
-                                    listSort(timeSchedules);
+                                    timeScheduleVOS.add(position,new TimeScheduleVO(etDialogPlaceTodo.getText().toString(),latLng.latitude,latLng.longitude,tvDialogTime.getText().toString(),etDialogCost.getText().toString(),etDialogDetail.getText().toString(),spinSelect));
+                                    listSort(timeScheduleVOS);
                                     adapter.notifyDataSetChanged();
                                     Toast.makeText(AddSchedule.this, "일정 변경 완료", Toast.LENGTH_SHORT).show();
                                     tvDialogTime=null;
@@ -239,7 +234,7 @@ public class AddSchedule extends AppCompatActivity {
                             builder.create().show();
                             break;
                         case 1:
-                            timeSchedules.remove(position);
+                            timeScheduleVOS.remove(position);
                             adapter.notifyDataSetChanged();
                             break;
                     }
@@ -253,7 +248,7 @@ public class AddSchedule extends AppCompatActivity {
     public void clickMapView(View view) {
         Intent intent = new Intent(this,MapActivity.class);
         int cnt=0;
-        for(TimeSchedule t : timeSchedules){
+        for(TimeScheduleVO t : timeScheduleVOS){
             if(t.mapLng != 0 && t.mapLat != 0){
                 cnt++;
             }
@@ -263,8 +258,8 @@ public class AddSchedule extends AppCompatActivity {
         mapLngs = new double[cnt];
         String[] toDos = new String[cnt];
         int longcnt=0;
-        for(int i=0; i<timeSchedules.size(); i++){
-            TimeSchedule t = timeSchedules.get(i);
+        for(int i = 0; i< timeScheduleVOS.size(); i++){
+            TimeScheduleVO t = timeScheduleVOS.get(i);
             if (t.mapLng != 0 && t.mapLat != 0) {
                 mapLats[longcnt] = t.mapLat;
                 mapLngs[longcnt] = t.mapLng;
@@ -292,8 +287,8 @@ public class AddSchedule extends AppCompatActivity {
             if (latLng == null) {
                 startActivityForResult(intent, 25);
             } else {
-                intent.putExtra("lat", dialogTimeSchedule.mapLat);
-                intent.putExtra("lng", dialogTimeSchedule.mapLng);
+                intent.putExtra("lat", dialogTimeScheduleVO.mapLat);
+                intent.putExtra("lng", dialogTimeScheduleVO.mapLng);
                 startActivityForResult(intent, 25);
             }
         }
@@ -339,8 +334,8 @@ public class AddSchedule extends AppCompatActivity {
         }
     }
 
-    public void listSort(ArrayList<TimeSchedule> timeSchedules){
-        Collections.sort(timeSchedules);
+    public void listSort(ArrayList<TimeScheduleVO> timeScheduleVOS){
+        Collections.sort(timeScheduleVOS);
     }
 
 }

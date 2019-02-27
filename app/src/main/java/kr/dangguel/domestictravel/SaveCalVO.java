@@ -4,7 +4,7 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.util.Calendar;
 
-public class SaveCal {
+public class SaveCalVO {
 
     String range;
     String days;
@@ -16,7 +16,7 @@ public class SaveCal {
     CalendarDay day1;
     CalendarDay today;
 
-    public SaveCal(String range, String days, String title, CalendarDay makeDay, CalendarDay day1) {
+    public SaveCalVO(String range, String days, String title, CalendarDay makeDay, CalendarDay day1) {
         this.range = range;
         this.days = days;
         this.title = title;

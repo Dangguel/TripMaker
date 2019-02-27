@@ -11,7 +11,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,7 +47,7 @@ public class NaviActivity extends AppCompatActivity {
     FragmentManager manager;
     FragmentTransaction tran;
 
-    ArrayList<SchduleList> schduleLists = new ArrayList<>();
+    ArrayList<ScheduleListVO> schduleLists = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +68,8 @@ public class NaviActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()){
                     case R.id.menu_schedule:
                         toolbar.setTitle("일정");
-                        Menu menu = toolbar.getMenu();
-                        menu.findItem(R.id.menu_chart).setVisible(false);
+                        toolbar.getMenu().findItem(R.id.menu_chart).setVisible(false);
+                        toolbar.getMenu().findItem(R.id.menu_map).setVisible(true);
                         tran = manager.beginTransaction();
                         tran.replace(R.id.focus_frag,schedule);
                         tran.commit();
@@ -83,6 +82,8 @@ public class NaviActivity extends AppCompatActivity {
                         break;
                     case R.id.menu_checklist:
                         toolbar.setTitle("체크리스트");
+                        toolbar.getMenu().findItem(R.id.menu_chart).setVisible(false);
+                        toolbar.getMenu().findItem(R.id.menu_map).setVisible(false);
                         tran = manager.beginTransaction();
                         tran.replace(R.id.focus_frag,checklist);
                         tran.commit();
@@ -144,7 +145,7 @@ public class NaviActivity extends AppCompatActivity {
 
             String schDay = "D"+(i+1);
 
-            schduleLists.add(new SchduleList(schDay,schDate[i]));
+            schduleLists.add(new ScheduleListVO(schDay,schDate[i]));
         }
 
         drawerToggle = new ActionBarDrawerToggle(this,drawer,R.string.app_name,R.string.app_name);
