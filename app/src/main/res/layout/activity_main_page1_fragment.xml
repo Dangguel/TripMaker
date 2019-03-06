@@ -7,7 +7,18 @@
 
     <kr.dangguel.domestictravel.MyListView
         android:id="@+id/listView"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/tv_main_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="여행 목록이 없습니다"
+        android:textSize="30sp"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:visibility="gone"/>
 
 </RelativeLayout>

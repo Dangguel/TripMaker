@@ -68,7 +68,6 @@ public class ScheduleAdapter extends BaseExpandableListAdapter {
         ScheduleListVO schduleList = groupList.get(groupPosition);
         TextView tvDay = convertView.findViewById(R.id.tv_schedule_a_day);
         TextView tvDate = convertView.findViewById(R.id.tv_schedule_date);
-        TextView tvTotalCost = convertView.findViewById(R.id.tv_schedule_total_cost);
         tvDay.setText(schduleList.schDay);
         tvDate.setText(schduleList.schDate);
 

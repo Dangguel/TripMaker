@@ -1,10 +1,15 @@
 package kr.dangguel.domestictravel;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -48,6 +53,16 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout.setupWithViewPager(pager);
 
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+            int checkSelfPermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if(checkSelfPermission==PackageManager.PERMISSION_DENIED){
+                String[] permissions = new String [] {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                requestPermissions(permissions,100);
+
+                return;
+            }
+        }
+
     }
 
     void startFragment1() {
@@ -60,6 +75,20 @@ public class MainActivity extends AppCompatActivity {
     }
     int getIndex(){
         return index;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode){
+            case 100 :
+                if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                    Toast.makeText(this, "사진 저장 가능", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(this, "사진 저장 기능 제한", Toast.LENGTH_SHORT).show();
+                }
+        }
     }
 
 }

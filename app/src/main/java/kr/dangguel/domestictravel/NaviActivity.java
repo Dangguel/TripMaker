@@ -90,6 +90,8 @@ public class NaviActivity extends AppCompatActivity {
                         break;
                     case R.id.menu_diary:
                         toolbar.setTitle("여행 일기");
+                        toolbar.getMenu().findItem(R.id.menu_chart).setVisible(false);
+                        toolbar.getMenu().findItem(R.id.menu_map).setVisible(false);
                         tran = manager.beginTransaction();
                         tran.replace(R.id.focus_frag,diary);
                         tran.commit();
@@ -118,12 +120,12 @@ public class NaviActivity extends AppCompatActivity {
         days.setText(intent.getStringExtra("days"));
         untilday.setText(intent.getIntExtra("untilday",0) + "일 남음");
 
-        //String[] strDays = intent.getStringExtra("days").split(" ");
-        String[] strDays = "10 일간 여행".split(" ");
+        String[] strDays = intent.getStringExtra("days").split(" ");
+        //String[] strDays = "10 일간 여행".split(" ");
         int daysNum = Integer.parseInt(strDays[0]);
 
-        //String[] strRange = intent.getStringExtra("range").split("~");
-        String[] strRange = "2019-2-19(목) ~ 2019-2-25(화)".split("~");
+        String[] strRange = intent.getStringExtra("range").split("~");
+        //String[] strRange = "2019-2-19(목) ~ 2019-2-25(화)".split("~");
         strRange[0]=strRange[0].trim();
         strRange[1]=strRange[1].trim();
         strRange=strRange[0].split("-");
