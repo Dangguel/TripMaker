@@ -2,7 +2,7 @@ package kr.dangguel.domestictravel;
 
 import java.io.Serializable;
 
-public class TimeSchedule implements Comparable<TimeSchedule> , Serializable {
+public class TimeScheduleVO implements Comparable<TimeScheduleVO> , Serializable {
     String placeTodo;
     double mapLat,mapLng;
     String time;
@@ -10,7 +10,7 @@ public class TimeSchedule implements Comparable<TimeSchedule> , Serializable {
     String detailplan;
     String spinselect;
 
-    public TimeSchedule(String placeTodo, double mapLat, double mapLng, String time, String cost, String detailplan ,String spinselect) {
+    public TimeScheduleVO(String placeTodo, double mapLat, double mapLng, String time, String cost, String detailplan , String spinselect) {
         this.placeTodo = placeTodo;
         this.mapLat = mapLat;
         this.mapLng = mapLng;
@@ -21,7 +21,7 @@ public class TimeSchedule implements Comparable<TimeSchedule> , Serializable {
     }
 
     @Override
-    public int compareTo(TimeSchedule o) {
+    public int compareTo(TimeScheduleVO o) {
         int a = Integer.parseInt(this.time.replace(":",""));
         int b = Integer.parseInt(o.time.replace(":",""));
 

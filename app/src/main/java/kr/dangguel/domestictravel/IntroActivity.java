@@ -1,6 +1,7 @@
 package kr.dangguel.domestictravel;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.animation.Animation;
@@ -24,7 +25,6 @@ public class IntroActivity extends AppCompatActivity {
 
         timer.schedule(task,4000);
 
-
     }
     TimerTask task = new TimerTask() {
         @Override
@@ -34,4 +34,6 @@ public class IntroActivity extends AppCompatActivity {
             finish();
         }
     };
+
+
 }

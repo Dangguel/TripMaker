@@ -9,6 +9,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="post" />
+        android:text="개발 중 입니다"
+        android:gravity="center"
+        android:textSize="20sp"/>
 
 </FrameLayout>
