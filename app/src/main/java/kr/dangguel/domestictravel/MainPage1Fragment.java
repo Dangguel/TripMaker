@@ -3,10 +3,12 @@ package kr.dangguel.domestictravel;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +53,7 @@ public class MainPage1Fragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SharedPreferences pref = mainActivity.getSharedPreferences("cals", Context.MODE_PRIVATE);
+        final SharedPreferences pref = mainActivity.getSharedPreferences("cals", Context.MODE_PRIVATE);
         String json = pref.getString("cals", null);
         CalendarDay today = CalendarDay.today();
 
@@ -103,6 +105,8 @@ public class MainPage1Fragment extends Fragment {
                                 String range = saveCalVO.range;
                                 int untilday = saveCalVO.untilday;
                                 String days = saveCalVO.days;
+
+                                intent.putExtra("index",position);
                                 intent.putExtra("title", title);
                                 intent.putExtra("range", range);
                                 intent.putExtra("untilday", untilday);
@@ -114,12 +118,27 @@ public class MainPage1Fragment extends Fragment {
                                 mainActivity.frag2.editMode();
                                 mainActivity.changeIndex(position);
                                 cals.remove(position);
+
+                                getActivity().getSharedPreferences(position+"schedule",Context.MODE_PRIVATE).edit().remove(position+"schedule").commit();
+                                getActivity().getSharedPreferences(position+"checklist",Context.MODE_PRIVATE).edit().remove(position+"checklist").commit();
+                                getActivity().getSharedPreferences(position+"costs",Context.MODE_PRIVATE).edit().remove(position+"costs").commit();
+                                getActivity().getSharedPreferences(position+"diary",Context.MODE_PRIVATE).edit().remove(position+"diary").commit();
+
                                 mainActivity.startFragment2();
-                                mainActivity.frag1.updateAdapter();
+                                updateAdapter();
+                                Log.e("aa","remove");
                                 break;
                             case 2:
                                 cals.remove(position);
-                                mainActivity.frag1.updateAdapter();
+
+                                getActivity().getSharedPreferences(position+"schedule",Context.MODE_PRIVATE).edit().remove(position+"schedule").commit();
+                                getActivity().getSharedPreferences(position+"checklist",Context.MODE_PRIVATE).edit().remove(position+"checklist").commit();
+                                getActivity().getSharedPreferences(position+"costs",Context.MODE_PRIVATE).edit().remove(position+"costs").commit();
+                                getActivity().getSharedPreferences(position+"diary",Context.MODE_PRIVATE).edit().remove(position+"diary").commit();
+
+                                updateAdapter();
+                                Log.e("bb","remove");
+                                Log.e("cc",position+"schedule");
                                 break;
                         }
                     }
@@ -156,7 +175,7 @@ public class MainPage1Fragment extends Fragment {
 
         editor.putString("cals", jArray.toString());
         editor.commit();
-
+        Log.e("cc","remove");
     }
 
 }

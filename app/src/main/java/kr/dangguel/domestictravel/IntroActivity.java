@@ -8,6 +8,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.google.android.gms.ads.MobileAds;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -18,6 +20,8 @@ public class IntroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
+
+        MobileAds.initialize(this,"ca-app-pub-8126188547687864~6158332941");
 
         iv=findViewById(R.id.iv);
         Animation ani = AnimationUtils.loadAnimation(this,R.anim.logo);

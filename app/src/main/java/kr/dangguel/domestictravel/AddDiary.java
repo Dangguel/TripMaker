@@ -19,6 +19,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -35,16 +37,20 @@ public class AddDiary extends AppCompatActivity {
     ImageView iv;
     int day;
 
+    AdView adView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_diary);
 
+        adView=findViewById(R.id.adView);
+
         final Intent intent = getIntent();
         day = intent.getIntExtra("position", -1);
         if(intent.getSerializableExtra("diary")!=null){
             diarys = (ArrayList<DiaryVO>) intent.getSerializableExtra("diary");
-            View v = getLayoutInflater().inflate(R.layout.add_diary_listview,null);
+            diarys.add(new DiaryVO());
         }else{
             diarys.add(new DiaryVO());
         }
@@ -75,7 +81,7 @@ public class AddDiary extends AppCompatActivity {
                 Toast.makeText(AddDiary.this, "저장 되었습니다", Toast.LENGTH_SHORT).show();
                 Intent resultintent = new Intent();
                 DiaryVO diary = diarys.get(diarys.size()-1);
-                if(diary.memo==null)
+                if(diary.picPath==null)
                     diarys.remove(diary);
                 if(diarys.size()==1 && diarys.get(0).picPath==null){
                     diarys.clear();
@@ -87,6 +93,9 @@ public class AddDiary extends AppCompatActivity {
             }
         });
         builder.setNeutralButton("취소", null);
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
     }
 
     @Override
@@ -126,7 +135,6 @@ public class AddDiary extends AppCompatActivity {
                         diary.setPicPath(uri.toString());
                         Picasso.get().load(uri).into(iv);
                         adapter.notifyDataSetChanged();
-
                     }
                     break;
             }

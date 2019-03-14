@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -30,11 +32,16 @@ public class DiaryFragment extends Fragment {
     ArrayList<ScheduleListVO> schduleLists;
     ArrayList<DiaryVO> diarys;
     HashMap<Integer, ArrayList> totalDiary = new HashMap<>();
+    int prefIndex;
+    AdView adView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_diary, container, false);
+        adView = view.findViewById(R.id.adView);
+        Intent intent = getActivity().getIntent();
+        prefIndex = intent.getIntExtra("index",-1);
 
         NaviActivity naviActivity = (NaviActivity) getActivity();
         schduleLists = naviActivity.schduleLists;
@@ -43,8 +50,8 @@ public class DiaryFragment extends Fragment {
         adapter = new DiaryAdapter(getLayoutInflater(), schduleLists, totalDiary);
         listView.setAdapter(adapter);
 
-        SharedPreferences pref = getActivity().getSharedPreferences("diary", Context.MODE_PRIVATE);
-        String json = pref.getString("diary", null);
+        SharedPreferences pref = getActivity().getSharedPreferences(prefIndex+"diary", Context.MODE_PRIVATE);
+        String json = pref.getString(prefIndex+"diary", null);
         if (json != null) {
             try {
                 totalDiary.clear();
@@ -112,7 +119,8 @@ public class DiaryFragment extends Fragment {
             }
         });
 
-
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
         return view;
     }
 
@@ -126,11 +134,11 @@ public class DiaryFragment extends Fragment {
 
                     totalDiary.put(day, diarys);
 
-                    SharedPreferences pref = getActivity().getSharedPreferences("diary", Context.MODE_PRIVATE);
+                    SharedPreferences pref = getActivity().getSharedPreferences(prefIndex+"diary", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = pref.edit();
                     Gson gson = new Gson();
                     String json = gson.toJson(totalDiary);
-                    editor.putString("diary", json);
+                    editor.putString(prefIndex+"diary", json);
                     editor.commit();
 
                     listView.expandGroup(day, true);

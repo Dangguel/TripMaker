@@ -46,6 +46,7 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/iv_map_marker_creator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_map"
@@ -54,6 +55,7 @@
 
 
     <TextView
+        android:id="@+id/tv_map_choose_place"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="현 위치 선택"

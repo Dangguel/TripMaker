@@ -1,5 +1,6 @@
 package kr.dangguel.domestictravel;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -49,13 +50,16 @@ public class NaviActivity extends AppCompatActivity {
 
     ArrayList<ScheduleListVO> schduleLists = new ArrayList<>();
 
+    BackPressCloswHandler backPressCloseHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navi);
 
-        Intent intent = getIntent();
+        backPressCloseHandler = new BackPressCloswHandler(Toast.makeText(this, "\'뒤로\' 버튼을 한번 더 누르시면\n메인 화면으로 이동합니다", Toast.LENGTH_SHORT),this);
 
+        Intent intent = getIntent();
 
         foucsFrag = findViewById(R.id.focus_frag);
 
@@ -68,8 +72,6 @@ public class NaviActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()){
                     case R.id.menu_schedule:
                         toolbar.setTitle("일정");
-                        toolbar.getMenu().findItem(R.id.menu_chart).setVisible(false);
-                        toolbar.getMenu().findItem(R.id.menu_map).setVisible(true);
                         tran = manager.beginTransaction();
                         tran.replace(R.id.focus_frag,schedule);
                         tran.commit();
@@ -82,16 +84,12 @@ public class NaviActivity extends AppCompatActivity {
                         break;
                     case R.id.menu_checklist:
                         toolbar.setTitle("체크리스트");
-                        toolbar.getMenu().findItem(R.id.menu_chart).setVisible(false);
-                        toolbar.getMenu().findItem(R.id.menu_map).setVisible(false);
                         tran = manager.beginTransaction();
                         tran.replace(R.id.focus_frag,checklist);
                         tran.commit();
                         break;
                     case R.id.menu_diary:
                         toolbar.setTitle("여행 일기");
-                        toolbar.getMenu().findItem(R.id.menu_chart).setVisible(false);
-                        toolbar.getMenu().findItem(R.id.menu_map).setVisible(false);
                         tran = manager.beginTransaction();
                         tran.replace(R.id.focus_frag,diary);
                         tran.commit();
@@ -127,9 +125,14 @@ public class NaviActivity extends AppCompatActivity {
         String[] strRange = intent.getStringExtra("range").split("~");
         //String[] strRange = "2019-2-19(목) ~ 2019-2-25(화)".split("~");
         strRange[0]=strRange[0].trim();
-        strRange[1]=strRange[1].trim();
-        strRange=strRange[0].split("-");
-        strRange[2]=strRange[2].split("\\(")[0];
+        if(strRange.length==2) {
+            strRange[1] = strRange[1].trim();
+            strRange = strRange[0].split("-");
+            strRange[2] = strRange[2].split("\\(")[0];
+        }else {
+            strRange = strRange[0].split("-");
+            strRange[2] = strRange[2].split("\\(")[0];
+        }
         int year = Integer.parseInt(strRange[0]);
         int month = Integer.parseInt(strRange[1]);
         int day = Integer.parseInt(strRange[2]);
@@ -182,12 +185,6 @@ public class NaviActivity extends AppCompatActivity {
                 manager.popBackStack();
                 finish();
                 break;
-            case R.id.menu_map:
-                Toast.makeText(this, "map", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.menu_chart:
-                Toast.makeText(this, "chart", Toast.LENGTH_SHORT).show();
-                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -195,7 +192,6 @@ public class NaviActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.actionbar,menu);
-        menu.findItem(R.id.menu_chart).setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -228,4 +224,8 @@ public class NaviActivity extends AppCompatActivity {
         return strWeek;
     }
 
+    @Override
+    public void onBackPressed() {
+        backPressCloseHandler.onBackPressed();
+    }
 }

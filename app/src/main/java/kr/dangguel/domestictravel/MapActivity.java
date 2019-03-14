@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,15 +54,19 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     double[] mapLats;
     double[] mapLngs;
     String[] toDos;
+    boolean clickMapView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+
         Intent intent = getIntent();
         if (intent.getDoubleExtra("lat", 0) != 0) {
             double lat = intent.getDoubleExtra("lat", 0);
             double lng = intent.getDoubleExtra("lng", 0);
+            clickMapView = intent.getBooleanExtra("clickMapView",false);
+            clickMapViewSetting();
             if (lat != 0 && lng != 0) {
                 latLng = new LatLng(lat, lng);
             }
@@ -70,6 +75,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mapLats = intent.getDoubleArrayExtra("mapLats");
             mapLngs = intent.getDoubleArrayExtra("mapLngs");
             toDos = intent.getStringArrayExtra("toDos");
+            clickMapView = intent.getBooleanExtra("clickMapView",false);
+            clickMapViewSetting();
         }
         etMap = findViewById(R.id.et_map);
         map = (MapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -100,17 +107,22 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 markers[i].setCaptionColor(Color.BLUE);
                 markers[i].setMap(naverMap);
             }
-            PolylineOverlay polyline = new PolylineOverlay();
             ArrayList<LatLng> latLngArrayList = new ArrayList<>();
             for(int i=0; i<latLngs.length; i++){
                 latLngArrayList.add(latLngs[i]);
             }
-            polyline.setCoords(latLngArrayList);
-            polyline.setWidth(10);
-            polyline.setColor(Color.GREEN);
-            polyline.setJoinType(PolylineOverlay.LineJoin.Round);
-            polyline.setMap(naverMap);
-            this.naverMap.setCameraPosition(new CameraPosition(latLngs[0], 13));
+
+            if(latLngArrayList.size()==1){
+                this.naverMap.setCameraPosition(new CameraPosition(latLngs[0],15));
+            }else {
+                PolylineOverlay polyline = new PolylineOverlay();
+                polyline.setCoords(latLngArrayList);
+                polyline.setWidth(10);
+                polyline.setColor(Color.GREEN);
+                polyline.setJoinType(PolylineOverlay.LineJoin.Round);
+                polyline.setMap(naverMap);
+                this.naverMap.setCameraPosition(new CameraPosition(latLngs[0], 13));
+            }
         }
     }
 
@@ -156,6 +168,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         } catch (Exception e) {
             Toast.makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public void clickMapViewSetting(){
+        ImageView iv=findViewById(R.id.iv_map_marker_creator);
+        TextView tv=findViewById(R.id.tv_map_choose_place);
+
+        if(clickMapView){
+            iv.setVisibility(View.GONE);
+            tv.setVisibility(View.GONE);
+        }else{
+            iv.setVisibility(View.VISIBLE);
+            tv.setVisibility(View.VISIBLE);
         }
     }
 }

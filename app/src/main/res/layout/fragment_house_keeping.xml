@@ -3,14 +3,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HouseKeepingFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="개발 중 입니다"
-        android:gravity="center"
-        android:textSize="20sp"/>
+        android:orientation="vertical"
+        android:layout_marginTop="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/text_outline"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/tv_total_all_cost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="총 지출 : "
+                android:gravity="center_horizontal"
+                android:textSize="20sp"
+                android:background="@color/Primary" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/layout_cost_tab"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabIndicatorColor="@color/Accent"
+                app:tabIndicatorHeight="4dp"
+                app:tabMode="fixed"
+                app:tabSelectedTextColor="@color/Accent"
+                app:tabTextColor="#000000"
+                android:background="@color/Primary"/>
+
+        </LinearLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager_cost"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <com.google.android.gms.ads.AdView
+            android:layout_marginTop="4dp"
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-8126188547687864/9547570156">
+        </com.google.android.gms.ads.AdView>
+
+    </LinearLayout>
+
 
 </FrameLayout>

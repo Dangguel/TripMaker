@@ -39,6 +39,7 @@
         android:layout_below="@id/tv_add_diary_title"
         android:layout_marginTop="8dp"
         android:layout_marginLeft="16dp"
-        android:maxHeight="80dp" />
+        android:maxHeight="80dp"
+        android:gravity="top"/>
 
 </RelativeLayout>

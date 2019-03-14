@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.naver.maps.geometry.LatLng;
 import com.nightonke.boommenu.BoomButtons.BoomButton;
 import com.nightonke.boommenu.BoomMenuButton;
@@ -60,11 +62,13 @@ public class AddSchedule extends AppCompatActivity {
     AddScheduleAdapter adapter;
 
     AlertDialog.Builder builder;
+    AdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_schedule);
+        adView=findViewById(R.id.adView);
         toolbar = findViewById(R.id.add_schedule_toolbar);
 
         etPlaceTodo = findViewById(R.id.et_place_todo);
@@ -116,6 +120,8 @@ public class AddSchedule extends AppCompatActivity {
             }
         });
         builder.setNeutralButton("취소",null);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
     }
 
     @Override
@@ -167,7 +173,7 @@ public class AddSchedule extends AppCompatActivity {
         if (latLng == null)
             latLng = new LatLng(0, 0);
         if (etPlaceTodo.getText().toString().equals("") || tvTime.getText().toString().equals("시간")){
-            Toast.makeText(this, "장소와 시간은 필수 입력 값입니다.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "장소와 시간은 필수 입력입니다", Toast.LENGTH_LONG).show();
             return;
         }
         timeScheduleVOS.add(new TimeScheduleVO(etPlaceTodo.getText().toString(), latLng.latitude, latLng.longitude, tvTime.getText().toString(), etCost.getText().toString(), etDetailPlan.getText().toString(), spinSelect));
@@ -246,13 +252,17 @@ public class AddSchedule extends AppCompatActivity {
 
 
     public void clickMapView(View view) {
-        Intent intent = new Intent(this,MapActivity.class);
         int cnt=0;
         for(TimeScheduleVO t : timeScheduleVOS){
             if(t.mapLng != 0 && t.mapLat != 0){
                 cnt++;
             }
         }
+        if(cnt==0){
+            Toast.makeText(this, "등록된 위치가 없습니다", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Intent intent = new Intent(this,MapActivity.class);
         double[] mapLngs,mapLats;
         mapLats = new double[cnt];
         mapLngs = new double[cnt];
@@ -263,13 +273,16 @@ public class AddSchedule extends AppCompatActivity {
             if (t.mapLng != 0 && t.mapLat != 0) {
                 mapLats[longcnt] = t.mapLat;
                 mapLngs[longcnt] = t.mapLng;
-                toDos[longcnt] = t.placeTodo +"\n"+ t.time;
+                toDos[longcnt] = (i+1)+". "+t.placeTodo +"\n"+ t.time;
                 longcnt++;
             }
         }
+
+        boolean clickMapView = true;
         intent.putExtra("mapLats",mapLats);
         intent.putExtra("mapLngs",mapLngs);
         intent.putExtra("toDos",toDos);
+        intent.putExtra("clickMapView",clickMapView);
         startActivity(intent);
     }
 

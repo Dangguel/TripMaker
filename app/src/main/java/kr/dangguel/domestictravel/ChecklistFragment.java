@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.naver.maps.geometry.LatLng;
 import com.nightonke.boommenu.BoomButtons.BoomButton;
 import com.nightonke.boommenu.BoomMenuButton;
@@ -42,12 +45,15 @@ public class ChecklistFragment extends Fragment {
     CheckAdapter adapter;
     BoomMenuButton bmb;
     LayoutInflater inflater;
+    int prefIndex;
+    AdView adView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_checklist, container, false);
         this.inflater = inflater;
+        adView=view.findViewById(R.id.adView);
         checkList = view.findViewById(R.id.checklist);
         adapter = new CheckAdapter(inflater, checks);
         checkList.setAdapter(adapter);
@@ -55,8 +61,11 @@ public class ChecklistFragment extends Fragment {
         TextView empty = view.findViewById(R.id.tv_empty);
         checkList.setEmptyView(empty);
 
-        SharedPreferences pref = getActivity().getSharedPreferences("checklist", Context.MODE_PRIVATE);
-        String json = pref.getString("checklist", null);
+        Intent intent = getActivity().getIntent();
+        prefIndex = intent.getIntExtra("index",-1);
+
+        SharedPreferences pref = getActivity().getSharedPreferences(prefIndex+"checklist", Context.MODE_PRIVATE);
+        String json = pref.getString(prefIndex+"checklist", null);
 
         if (json != null) {
             try {
@@ -113,6 +122,8 @@ public class ChecklistFragment extends Fragment {
             }
         });
 
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
         return view;
     }
 
@@ -166,7 +177,7 @@ public class ChecklistFragment extends Fragment {
     };
 
     public void saveData(){
-        SharedPreferences pref = getActivity().getSharedPreferences("checklist", Context.MODE_PRIVATE);
+        SharedPreferences pref = getActivity().getSharedPreferences(prefIndex+"checklist", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         JSONArray jArray = new JSONArray();
         try {
@@ -174,14 +185,13 @@ public class ChecklistFragment extends Fragment {
                 JSONObject jObject = new JSONObject();
                 jObject.put("item", checks.get(i).item);
                 jObject.put("check", checks.get(i).check);
-                Log.e("check",checks.get(i).check+"");
                 jArray.put(jObject);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        editor.putString("checklist", jArray.toString());
+        editor.putString(prefIndex+"checklist", jArray.toString());
         editor.commit();
     }
 

@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AddCost">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/AppTheme.Appbar">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#888888"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="#ffffff"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:weightSum="3"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_place_todo"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.7"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:hint="장소,할일"
+                    android:inputType="text"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="4dp"
+                    android:layout_weight="0.8"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:hint="시간"
+                    android:onClick="setTime"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:onClick="clickAdd"
+                    android:text="추가"
+                    android:textColor="#0000ff"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="6">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.github.zagum.switchicon.SwitchIconView
+                        android:id="@+id/si_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:alpha="1"
+                        android:padding="2dp"
+                        app:si_animation_duration="500"
+                        app:si_disabled_color="#b7b7b7"
+                        app:si_enabled="true"
+                        app:si_no_dash="true"
+                        app:si_tint_color="#0000ff"
+                        app:srcCompat="@mipmap/ic_meal"
+                        android:clickable="true" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="식사"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.github.zagum.switchicon.SwitchIconView
+                        android:id="@+id/si_2"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_height="50dp"
+                        android:alpha="1"
+                        android:padding="2dp"
+                        app:si_animation_duration="500"
+                        app:si_disabled_color="#b7b7b7"
+                        app:si_enabled="false"
+                        app:si_no_dash="true"
+                        app:si_tint_color="#0000ff"
+                        app:srcCompat="@mipmap/ic_shopping"
+                        android:clickable="true" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="쇼핑"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.github.zagum.switchicon.SwitchIconView
+                        android:id="@+id/si_3"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_height="50dp"
+                        android:alpha="1"
+                        android:padding="2dp"
+                        app:si_animation_duration="500"
+                        app:si_disabled_color="#b7b7b7"
+                        app:si_enabled="false"
+                        app:si_no_dash="true"
+                        app:si_tint_color="#0000ff"
+                        app:srcCompat="@mipmap/ic_traffic"
+                        android:clickable="true" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="교통"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.github.zagum.switchicon.SwitchIconView
+                        android:id="@+id/si_4"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_height="50dp"
+                        android:alpha="1"
+                        android:padding="2dp"
+                        app:si_animation_duration="500"
+                        app:si_disabled_color="#b7b7b7"
+                        app:si_enabled="false"
+                        app:si_no_dash="true"
+                        app:si_tint_color="#0000ff"
+                        app:srcCompat="@mipmap/ic_tour"
+                        android:clickable="true" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="관광"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.github.zagum.switchicon.SwitchIconView
+                        android:id="@+id/si_5"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_height="50dp"
+                        android:alpha="1"
+                        android:padding="2dp"
+                        app:si_animation_duration="500"
+                        app:si_disabled_color="#b7b7b7"
+                        app:si_enabled="false"
+                        app:si_no_dash="true"
+                        app:si_tint_color="#0000ff"
+                        app:srcCompat="@mipmap/ic_home"
+                        android:clickable="true" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="숙박"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.github.zagum.switchicon.SwitchIconView
+                        android:id="@+id/si_6"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_height="50dp"
+                        android:alpha="1"
+                        android:padding="2dp"
+                        app:si_animation_duration="500"
+                        app:si_disabled_color="#b7b7b7"
+                        app:si_enabled="false"
+                        app:si_no_dash="true"
+                        app:si_tint_color="#0000ff"
+                        app:srcCompat="@mipmap/ic_more"
+                        android:clickable="true" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="기타"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:weightSum="2">
+
+                <EditText
+                    android:id="@+id/et_detail_plan"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:hint="상세 계획"
+                    android:inputType="text"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/et_cost"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:hint="비용"
+                    android:inputType="number"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="#ffffff"
+            android:orientation="vertical">
+
+            <kr.dangguel.domestictravel.MyListView
+                android:id="@+id/listview_in_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="8dp" />
+
+            <com.google.android.gms.ads.AdView
+                android:layout_marginTop="4dp"
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-8126188547687864/9547570156">
+            </com.google.android.gms.ads.AdView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

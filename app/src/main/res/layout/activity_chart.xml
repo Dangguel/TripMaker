@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ScheduleFragment"
-    android:orientation="vertical">
+    tools:context=".ChartActivity">
 
-    <ExpandableListView
-        android:id="@+id/schedule_listview"
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/piechart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:groupIndicator="@null"
-        />
+        android:layout_weight="1"/>
 
     <com.google.android.gms.ads.AdView
         android:layout_marginTop="4dp"
@@ -25,5 +23,6 @@
         ads:adSize="BANNER"
         ads:adUnitId="ca-app-pub-8126188547687864/9547570156">
     </com.google.android.gms.ads.AdView>
+
 
 </LinearLayout>

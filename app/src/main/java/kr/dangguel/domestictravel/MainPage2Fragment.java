@@ -58,7 +58,7 @@ public class MainPage2Fragment extends Fragment {
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (tvRange == null && tvDays == null) return;
+                if (tvRange.getText().equals("여행 기간") && tvDays.getText().equals("여행 일수")) return;
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle("여행 제목 설정");
                 builder.setMessage("여행 제목을 입력해주세요.\n글자수는 최대 15자입니다.");

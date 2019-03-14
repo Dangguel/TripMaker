@@ -9,12 +9,16 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
     TabLayout tabLayout;
     ViewPager pager;
     MainTabPagerAdapter adapter;
@@ -26,14 +30,15 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<SaveCalVO> cals = new ArrayList<>();
 
+    BackPressCloswHandler backPressCloswHandler;
+    AdView adView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*for(int i=0; i<cals.size(); i++){
-            cals.get(i).changeToday(); // 앱을 켰을때의 날짜로 바꾸는 메소드
-        }*/
+        backPressCloswHandler = new BackPressCloswHandler(Toast.makeText(this, "\'뒤로\' 버튼을 한번 더 누르시면\n종료 됩니다", Toast.LENGTH_SHORT),this);
 
         //툴바를 액션바로 설정
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -51,6 +56,26 @@ public class MainActivity extends AppCompatActivity {
         frag1 = (MainPage1Fragment) adapter.frags[0];
         frag2 = (MainPage2Fragment) adapter.frags[1];
 
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+            }
+            @Override
+            public void onPageSelected(int i) {
+                if(i==0){
+                    if(frag2.tvRange == null || frag2.tvDays == null){
+                        return;
+                    }else {
+                        frag2.tvRange.setText("여행 기간");
+                        frag2.tvDays.setText("여행 일수");
+                    }
+                }
+            }
+            @Override
+            public void onPageScrollStateChanged(int i) {
+            }
+        });
+
         tabLayout.setupWithViewPager(pager);
 
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
@@ -62,6 +87,10 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
         }
+
+        adView=findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
 
     }
 
@@ -83,12 +112,14 @@ public class MainActivity extends AppCompatActivity {
 
         switch (requestCode){
             case 100 :
-                if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
-                    Toast.makeText(this, "사진 저장 가능", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(this, "사진 저장 기능 제한", Toast.LENGTH_SHORT).show();
+                if(grantResults[0]==PackageManager.PERMISSION_DENIED){
+                    Toast.makeText(this, "외부저장소 사용 거부\n이미지 업로드 불가", Toast.LENGTH_SHORT).show();
                 }
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        backPressCloswHandler.onBackPressed();
+    }
 }

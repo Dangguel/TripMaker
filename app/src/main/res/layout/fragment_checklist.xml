@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChecklistFragment">
+    tools:context=".ChecklistFragment"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
         <kr.dangguel.domestictravel.MyListView
             android:id="@+id/checklist"
             android:layout_width="match_parent"
@@ -33,4 +35,16 @@
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
 
-</FrameLayout>
+    <com.google.android.gms.ads.AdView
+        android:layout_marginTop="4dp"
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-8126188547687864/9547570156">
+    </com.google.android.gms.ads.AdView>
+
+</LinearLayout>
