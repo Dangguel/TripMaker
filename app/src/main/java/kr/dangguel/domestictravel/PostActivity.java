@@ -104,7 +104,6 @@ public class PostActivity extends AppCompatActivity {
         SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(Request.Method.POST, serverUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                new AlertDialog.Builder(PostActivity.this).setMessage(response).show();
             }
         }, new Response.ErrorListener() {
             @Override

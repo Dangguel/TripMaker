@@ -1,5 +1,6 @@
 package kr.dangguel.domestictravel;
 
+import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,21 +10,20 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
-import org.w3c.dom.Text;
-
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DiaryAdapter extends BaseExpandableListAdapter {
 
+    Context context;
     LayoutInflater inflater;
     ArrayList<ScheduleListVO> schduleLists;
     HashMap<Integer,ArrayList> totalDiary;
 
-    public DiaryAdapter(LayoutInflater inflater, ArrayList<ScheduleListVO> schduleLists, HashMap<Integer, ArrayList> totalDiary) {
+    public DiaryAdapter(Context context,LayoutInflater inflater, ArrayList<ScheduleListVO> schduleLists, HashMap<Integer, ArrayList> totalDiary) {
+        this.context = context;
         this.inflater = inflater;
         this.schduleLists = schduleLists;
         this.totalDiary = totalDiary;
@@ -70,7 +70,8 @@ public class DiaryAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         if(convertView == null)
-            convertView = inflater.inflate(R.layout.diary_listview,parent,false);
+            convertView = inflater.inflate(R.layout.diary_listview, parent, false);
+
         TextView day = convertView.findViewById(R.id.tv_diary_a_day);
         TextView date = convertView.findViewById(R.id.tv_diary_date);
 
@@ -98,8 +99,7 @@ public class DiaryAdapter extends BaseExpandableListAdapter {
 
         if(diary.picPath!=null) {
             Uri uri = Uri.parse(diary.picPath);
-            Log.e("picPath",diary.picPath);
-            Picasso.get().load(uri).into(iv);
+            Glide.with(context).load(uri).into(iv);
             iv.setVisibility(View.VISIBLE);
         }
         return convertView;

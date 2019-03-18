@@ -154,7 +154,7 @@ public class AddCost extends AppCompatActivity {
                 tvTime.setText(msg);
                 tvTime.setTextColor(Color.RED);
             }
-        }, Calendar.HOUR_OF_DAY, Calendar.MINUTE, true);
+        }, Calendar.HOUR_OF_DAY, Calendar.MINUTE, false);
         dialog.show();
     }
 

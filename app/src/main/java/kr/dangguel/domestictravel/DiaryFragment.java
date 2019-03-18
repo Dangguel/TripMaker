@@ -47,7 +47,7 @@ public class DiaryFragment extends Fragment {
         schduleLists = naviActivity.schduleLists;
 
         listView = view.findViewById(R.id.diary_listview);
-        adapter = new DiaryAdapter(getLayoutInflater(), schduleLists, totalDiary);
+        adapter = new DiaryAdapter(getContext(),getLayoutInflater(), schduleLists, totalDiary);
         listView.setAdapter(adapter);
 
         SharedPreferences pref = getActivity().getSharedPreferences(prefIndex+"diary", Context.MODE_PRIVATE);

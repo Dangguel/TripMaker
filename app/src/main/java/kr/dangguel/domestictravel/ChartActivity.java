@@ -47,6 +47,7 @@ public class ChartActivity extends AppCompatActivity {
         HashMap schedule = (HashMap) intent.getSerializableExtra("schedule");
 
         if (cost != null) {
+            Log.e("aa","cost");
             for (int i = 0; i < cost.size(); i++) {
                 ArrayList<CostVO> costVOS = (ArrayList<CostVO>) cost.get(i);
                 for (int j = 0; j < costVOS.size(); j++) {
@@ -81,6 +82,7 @@ public class ChartActivity extends AppCompatActivity {
             }
         }
         if (schedule != null) {
+            Log.e("aa","schedule");
             for (int i = 0; i < schedule.size(); i++) {
                 ArrayList<TimeScheduleVO> timeScheduleVOS = (ArrayList<TimeScheduleVO>) schedule.get(i);
                 for (int j = 0; j < timeScheduleVOS.size(); j++) {
@@ -130,27 +132,21 @@ public class ChartActivity extends AppCompatActivity {
         ArrayList<PieEntry> yValues = new ArrayList<>();
         DecimalFormat moneyFormatter = new DecimalFormat("###,###");
         if (meal != 0) {
-            String formatMoney = moneyFormatter.format(meal);
             yValues.add(new PieEntry(meal, "식사"));
         }
         if (shopping != 0) {
-            String formatMoney = moneyFormatter.format(shopping);
             yValues.add(new PieEntry(shopping, "쇼핑"));
         }
         if (traffic != 0) {
-            String formatMoney = moneyFormatter.format(traffic);
             yValues.add(new PieEntry(traffic, "교통"));
         }
         if (tour != 0) {
-            String formatMoney = moneyFormatter.format(tour);
             yValues.add(new PieEntry(tour, "관광"));
         }
         if (home != 0) {
-            String formatMoney = moneyFormatter.format(home);
             yValues.add(new PieEntry(home, "숙박"));
         }
         if (more != 0) {
-            String formatMoney = moneyFormatter.format(more);
             yValues.add(new PieEntry(more, "기타"));
         }
 
@@ -196,8 +192,8 @@ public class ChartActivity extends AppCompatActivity {
             Toast.makeText(this, "가계부에 내용이 없습니다", Toast.LENGTH_SHORT).show();
         }
 
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
+        //AdRequest adRequest = new AdRequest.Builder().build();
+        //adView.loadAd(adRequest);
 
     }
 }

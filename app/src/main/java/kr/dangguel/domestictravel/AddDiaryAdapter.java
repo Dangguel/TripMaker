@@ -1,13 +1,10 @@
 package kr.dangguel.domestictravel;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -15,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -58,19 +56,21 @@ public class AddDiaryAdapter extends BaseAdapter {
         btn.setTag(position);
         et.setTag(position);
         btn.setVisibility(View.INVISIBLE);
-
         final DiaryVO diary = diarys.get(position);
         if (diary.picPath != null) {
             Uri uri = Uri.parse(diary.picPath);
             Picasso.get().load(uri).into(iv);
             btn.setVisibility(View.VISIBLE);
+            Log.e("adapter1", +position + "");
         } else {
             iv.setImageResource(R.mipmap.ic_add_photo);
             btn.setVisibility(View.INVISIBLE);
+            Log.e("adapter2", position + "");
         }
+        notifyDataSetChanged();
         if (diary.memo != null) {
             et.setText(diary.memo);
-        }else{
+        } else {
             et.setText("");
         }
 
@@ -90,7 +90,7 @@ public class AddDiaryAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 diarys.remove((int) v.getTag());
-                Log.e("size",diarys.size()+"");
+                Log.e("size", diarys.size() + "");
                 btn.setVisibility(View.INVISIBLE);
                 notifyDataSetChanged();
             }
@@ -119,4 +119,6 @@ public class AddDiaryAdapter extends BaseAdapter {
 
         return convertView;
     }
+
+
 }

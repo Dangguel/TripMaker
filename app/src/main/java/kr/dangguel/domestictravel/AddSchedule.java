@@ -321,7 +321,7 @@ public class AddSchedule extends AppCompatActivity {
                     tvTime.setTextColor(Color.RED);
                 }
             }
-        }, Calendar.HOUR_OF_DAY, Calendar.MINUTE, true);
+        }, Calendar.HOUR_OF_DAY, Calendar.MINUTE, false);
         dialog.show();
     }
 

@@ -19,13 +19,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 public class AddDiary extends AppCompatActivity {
 
@@ -36,7 +35,6 @@ public class AddDiary extends AppCompatActivity {
     ArrayList<DiaryVO> diarys = new ArrayList<>();
     ImageView iv;
     int day;
-
     AdView adView;
 
     @Override
@@ -44,14 +42,14 @@ public class AddDiary extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_diary);
 
-        adView=findViewById(R.id.adView);
+        adView = findViewById(R.id.adView);
 
         final Intent intent = getIntent();
         day = intent.getIntExtra("position", -1);
-        if(intent.getSerializableExtra("diary")!=null){
+        if (intent.getSerializableExtra("diary") != null) {
             diarys = (ArrayList<DiaryVO>) intent.getSerializableExtra("diary");
-            diarys.add(new DiaryVO());
-        }else{
+            View v = getLayoutInflater().inflate(R.layout.add_diary_listview, null);
+        } else {
             diarys.add(new DiaryVO());
         }
 
@@ -80,10 +78,10 @@ public class AddDiary extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(AddDiary.this, "저장 되었습니다", Toast.LENGTH_SHORT).show();
                 Intent resultintent = new Intent();
-                DiaryVO diary = diarys.get(diarys.size()-1);
-                if(diary.picPath==null)
+                DiaryVO diary = diarys.get(diarys.size() - 1);
+                if (diary.memo == null)
                     diarys.remove(diary);
-                if(diarys.size()==1 && diarys.get(0).picPath==null){
+                if (diarys.size() == 1 && diarys.get(0).picPath == null) {
                     diarys.clear();
                 }
                 resultintent.putExtra("diary", diarys);
@@ -129,18 +127,16 @@ public class AddDiary extends AppCompatActivity {
                         Uri uri = data.getData();
                         int i = (int) iv.getTag();
                         DiaryVO diary = diarys.get(i);
-                        if(diary.picPath == null) {
+                        if (diary.picPath == null) {
                             diarys.add(new DiaryVO());
                         }
                         diary.setPicPath(uri.toString());
                         Picasso.get().load(uri).into(iv);
-                        adapter.notifyDataSetChanged();
                     }
                     break;
             }
         }
     }
-
 
 
 }
